@@ -1,12 +1,28 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors } from "../Global/colors";
 
-const Header = () => {
+const Header = ({ navigation, title, canGoBack }) => {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.header}>
-      <Text style={styles.headerText}>Header</Text>
+    <View style={styles.container}>
+      <View style={{ height: insets.top }}></View>
+      <View style={styles.header}>
+        {canGoBack && (
+          <Pressable
+            style={styles.leftButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text>Back</Text>
+          </Pressable>
+        )}
+        <Text style={styles.headerText}>{title}</Text>
+        <Pressable style={styles.rightButton} onPress={() => {}}>
+          <Text>Logout</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -14,14 +30,27 @@ const Header = () => {
 export default Header;
 
 const styles = StyleSheet.create({
-  header: {
+  container: {
     backgroundColor: colors.primary,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
-    marginTop: 50,
   },
   headerText: {
-    color: "white",
+    color: "black",
     fontSize: 20,
-    textAlign: "center",
+  },
+  rightButton: {
+    position: "absolute",
+    right: 10,
+    padding: 10,
+  },
+  leftButton: {
+    position: "absolute",
+    left: 10,
+    padding: 10,
   },
 });

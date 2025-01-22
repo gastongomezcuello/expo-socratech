@@ -1,11 +1,17 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import React from "react";
 
 import CardShadow from "./wrappers/CardShadow";
+import { colors } from "../Global/colors";
+import { useNavigation } from "@react-navigation/native";
 
 const CategoryItem = ({ category }) => {
+  const navigation = useNavigation();
   return (
-    <Pressable onPress={() => console.log({ category })}>
+    <Pressable
+      onPress={() => {
+        navigation.navigate("ItemListCategory", { category });
+      }}
+    >
       <CardShadow style={styles.cardContainer}>
         <Text style={styles.text}>{category}</Text>
       </CardShadow>
@@ -17,14 +23,16 @@ export default CategoryItem;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: "red",
+    backgroundColor: colors.secondary,
     marginHorizontal: 10,
-    marginVertical: 5,
+    marginVertical: 30,
     padding: 10,
     justifyContent: "center",
     alignItems: "flex-start",
+    borderRadius: 10,
   },
   text: {
-    fontSize: 20,
+    fontSize: 25,
+    color: "white",
   },
 });
