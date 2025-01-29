@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialComunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -22,8 +22,11 @@ const TabNavigator = () => {
           headerShown: false,
           tabBarShowLabel: true,
           tabBarActiveBackgroundColor: colors.darkPrimary,
-          tabBarInactiveTintColor: colors.secondary,
+          tabBarInactiveTintColor: colors.details,
           tabBarActiveTintColor: colors.darkSecondary,
+          tabBarButton: (props) => (
+            <Pressable {...props} android_ripple={null} />
+          ),
           tabBarItemStyle: {
             height: 70,
           },
@@ -38,11 +41,13 @@ const TabNavigator = () => {
           tabBarStyle: {
             height: insets.bottom + 70,
             backgroundColor: colors.primary,
+            borderColor: colors.darkPrimary,
+            borderTopWidth: 1.5,
           },
         })}
       >
         <Tab.Screen
-          name="ShopTab"
+          name="Tienda"
           component={ShopStack}
           options={{
             tabBarIcon: ({ focused }) => {
@@ -51,7 +56,7 @@ const TabNavigator = () => {
                   <MaterialComunityIcons
                     name="shopping-outline"
                     size={32}
-                    color={focused ? colors.darkSecondary : colors.secondary}
+                    color={focused ? colors.darkSecondary : colors.details}
                   />
                 </View>
               );
@@ -59,7 +64,7 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="CartTab"
+          name="Carrito"
           component={CartStack}
           options={{
             tabBarIcon: ({ focused }) => {
@@ -68,7 +73,7 @@ const TabNavigator = () => {
                   <Feather
                     name="shopping-cart"
                     size={32}
-                    color={focused ? colors.darkSecondary : colors.secondary}
+                    color={focused ? colors.darkSecondary : colors.details}
                   />
                 </View>
               );
@@ -77,7 +82,7 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="OrdersTab"
+          name="Órdenes"
           component={OrdersStack}
           options={{
             tabBarIcon: ({ focused }) => {
@@ -86,7 +91,7 @@ const TabNavigator = () => {
                   <Fontisto
                     name="shopping-pos-machine"
                     size={32}
-                    color={focused ? colors.darkSecondary : colors.secondary}
+                    color={focused ? colors.darkSecondary : colors.details}
                   />
                 </View>
               );

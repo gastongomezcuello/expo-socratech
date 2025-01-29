@@ -1,14 +1,19 @@
 import { Pressable, StyleSheet, Text, Image } from "react-native";
 import { colors } from "../Global/colors";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { setProductIdSelected } from "../features/shop/shopSlice";
 
 const ProductItem = ({ item }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   return (
     <Pressable
       style={styles.card}
       onPress={() => {
+        dispatch(setProductIdSelected(item.id));
+
         navigation.navigate("ItemDetail", { item });
       }}
     >

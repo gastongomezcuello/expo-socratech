@@ -1,25 +1,27 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import { getItemsByCategory } from "../firebase/db";
-import Header from "../Components/Header";
+import { FlatList, StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
 import Search from "../Components/Search";
 import ProductItem from "../Components/ProductItem";
 import CardShadow from "../Components/wrappers/CardShadow";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
-const ItemListCategory = ({ route }) => {
+const ItemListCategory = () => {
   const insets = useSafeAreaInsets();
-
-  const { category } = route.params;
+  const productsFilteredByCategory = useSelector(
+    (state) => state.shop.value.productsFilteredByCategory || []
+  );
 
   const [items, setItems] = useState([]);
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getItemsByCategory(category).then((items) => {
-      setItems(items);
-    });
-  }, []);
+    console.log(productsFilteredByCategory);
+    const productsFiltered = productsFilteredByCategory.filter((product) =>
+      product.title.includes(search)
+    );
+    setItems(productsFiltered);
+  }, [productsFilteredByCategory, search]);
   const onSearch = (value) => {
     setSearch(items.filter((item) => item.title.includes(value)));
   };

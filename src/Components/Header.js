@@ -32,6 +32,8 @@ export default Header;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.primary,
+    borderColor: colors.darkPrimary,
+    borderBottomWidth: 1.5,
   },
   header: {
     flexDirection: "row",

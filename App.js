@@ -4,6 +4,8 @@ import { fonts } from "./src/Global/fonts";
 import { colors } from "./src/Global/colors";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TabNavigator from "./src/navigation/TabNavigator";
+import { Provider } from "react-redux";
+import store from "./src/app/store";
 
 export default function App() {
   const [fontsLoaded] = useFonts(fonts);
@@ -14,7 +16,9 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <TabNavigator />
+      <Provider store={store}>
+        <TabNavigator />
+      </Provider>
     </SafeAreaProvider>
   );
 }

@@ -3,12 +3,16 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import CardShadow from "./wrappers/CardShadow";
 import { colors } from "../Global/colors";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { setCategorySelected } from "../features/shop/shopSlice";
 
 const CategoryItem = ({ category }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <Pressable
       onPress={() => {
+        dispatch(setCategorySelected(category));
         navigation.navigate("ItemListCategory", { category });
       }}
     >
@@ -30,6 +34,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     borderRadius: 10,
+    borderWidth: 1.5,
+    borderColor: colors.darkSecondary,
   },
   text: {
     fontSize: 25,

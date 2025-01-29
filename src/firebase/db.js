@@ -11,6 +11,13 @@ import { app } from "./config";
 
 const db = getFirestore(app);
 
+export const getAllItems = async () => {
+  const querySnapshot = await getDocs(collection(db, "products"));
+  const items = querySnapshot.docs.map((doc) => doc.data());
+
+  return items;
+};
+
 export const getItemsByCategory = async (category) => {
   const q = query(
     collection(db, "products"),
