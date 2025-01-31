@@ -3,8 +3,6 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import CardShadow from "./wrappers/CardShadow";
 import { colors } from "../Global/colors";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
-import { setCategorySelected } from "../features/shop/shopSlice";
 
 const CategoryItem = ({ category }) => {
   const navigation = useNavigation();

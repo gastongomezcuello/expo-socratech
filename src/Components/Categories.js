@@ -1,7 +1,5 @@
 import { StyleSheet, View, FlatList } from "react-native";
-
 import CategoryItem from "./CategoryItem";
-
 import { useGetCategoriesQuery } from "../services/shopService";
 
 const Categories = () => {
