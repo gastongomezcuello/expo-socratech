@@ -1,14 +1,52 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, TextInput } from "react-native";
+import { useState } from "react";
+import { colors } from "../Global/colors";
 
-const InputForm = () => {
+const InputForm = ({ label, onChange, error = "", isSecure = false }) => {
+  const [input, setInput] = useState("");
+  const onChangeText = (text) => {
+    setInput(text);
+    onChange(text);
+  };
   return (
-    <View>
-      <Text>InputForm</Text>
+    <View style={styles.inputContainer}>
+      <Text style={styles.subtitle}>{label}</Text>
+      <TextInput
+        style={styles.input}
+        value={input}
+        onChangeText={onChangeText}
+        secureTextEntry={isSecure}
+      />
+      {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
 };
 
 export default InputForm;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "100%",
+  },
+  subtitle: {
+    width: "90%",
+    fontSize: 16,
+    fontFamily: "Montserrat-Bold",
+  },
+  input: {
+    width: "90%",
+    borderBottomWidth: 3,
+    borderBottomColor: colors.details,
+    padding: 2,
+    fontSize: 14,
+  },
+  error: {
+    width: "90%",
+    fontSize: 12,
+    color: "red",
+    fontFamily: "Montserrat-Regular",
+  },
+});

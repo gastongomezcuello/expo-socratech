@@ -9,7 +9,6 @@ const Signup = () => {
   return (
     <View>
       <View>
-        <Text>Login</Text>
         <InputForm label={"email"} onChange={() => {}} error={""} />
         <InputForm
           label={"password"}

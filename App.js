@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import { fonts } from "./src/Global/fonts";
 import { colors } from "./src/Global/colors";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import TabNavigator from "./src/navigation/TabNavigator";
+import MainNavigator from "./src/navigation";
 import { Provider } from "react-redux";
 import store from "./src/app/store";
 
@@ -17,7 +17,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <TabNavigator />
+        <MainNavigator />
       </Provider>
     </SafeAreaProvider>
   );
