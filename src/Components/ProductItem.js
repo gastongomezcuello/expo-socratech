@@ -32,8 +32,10 @@ export default ProductItem;
 
 const styles = StyleSheet.create({
   card: {
-    height: 350,
-    width: "50%",
+    height: "auto",
+    width: "49%",
+    borderWidth: 1,
+    borderColor: colors.darkSecondary,
   },
   title: {
     fontFamily: "Lobster-Regular",
@@ -48,6 +50,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "black",
     fontFamily: "Lobster-Regular",
+    paddingBottom: 10,
   },
   image: {
     height: 150,

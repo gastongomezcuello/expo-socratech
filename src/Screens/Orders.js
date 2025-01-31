@@ -4,10 +4,6 @@ import orders from "../data/orders.json";
 import { colors } from "../Global/colors";
 
 const Cart = () => {
-  const total = orders.reduce(
-    (acc, item) => acc + item.quantity * item.price,
-    0
-  );
   return (
     <View>
       <FlatList

@@ -2,12 +2,17 @@ import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import CardShadow from "../Components/wrappers/CardShadow";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import Header from "../Components/Header";
 import { colors } from "../Global/colors";
+import { useDispatch } from "react-redux";
+import { addItem } from "../features/cart/cartSlice";
 
 const ItemDetail = ({ route }) => {
+  const dispatch = useDispatch();
   const { item: product } = route.params;
   const insets = useSafeAreaInsets();
+  const onAddCart = () => {
+    dispatch(addItem({ ...product, quantity: 1 }));
+  };
 
   return (
     <View style={styles.main}>
@@ -25,11 +30,8 @@ const ItemDetail = ({ route }) => {
               <Text style={styles.titleText}>{product.title}</Text>
               <Text style={styles.descriptionText}>{product.description}</Text>
               <Text style={styles.descriptionTextPrice}>${product.price}</Text>
-              <Pressable
-                style={styles.buy}
-                onPress={() => console.log({ product })}
-              >
-                <Text style={styles.buyText}>Buy now</Text>
+              <Pressable style={styles.buy} onPress={() => onAddCart()}>
+                <Text style={styles.buyText}>Agregar al carrito</Text>
               </Pressable>
             </View>
           </CardShadow>

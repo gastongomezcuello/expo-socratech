@@ -1,30 +1,48 @@
-import { FlatList, StyleSheet, View } from "react-native";
-import { useEffect, useState } from "react";
+import { FlatList, StyleSheet, View, Text } from "react-native";
+import { useState } from "react";
 import Search from "../Components/Search";
 import ProductItem from "../Components/ProductItem";
 import CardShadow from "../Components/wrappers/CardShadow";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
+import { useGetProductsByCategoryQuery } from "../services/shopService";
 
-const ItemListCategory = () => {
+const ItemListCategory = ({ route }) => {
+  const { category } = route.params;
   const insets = useSafeAreaInsets();
-  const productsFilteredByCategory = useSelector(
-    (state) => state.shop.value.productsFilteredByCategory || []
-  );
 
-  const [items, setItems] = useState([]);
+  const {
+    data: productsFilteredByCategory = {},
+    isError,
+    isLoading,
+  } = useGetProductsByCategoryQuery(category);
+
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    console.log(productsFilteredByCategory);
-    const productsFiltered = productsFilteredByCategory.filter((product) =>
-      product.title.includes(search)
-    );
-    setItems(productsFiltered);
-  }, [productsFilteredByCategory, search]);
+  const productsArray = Object.values(productsFilteredByCategory);
+
+  const filteredProducts = productsArray.filter((product) =>
+    product.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   const onSearch = (value) => {
-    setSearch(items.filter((item) => item.title.includes(value)));
+    setSearch(value);
   };
+
+  if (isError) {
+    return (
+      <View>
+        <Text>Algo salió mal...</Text>
+      </View>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Cargando...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -33,9 +51,11 @@ const ItemListCategory = () => {
         style={[styles.listContainer, { marginBottom: insets.bottom }]}
       >
         <FlatList
-          data={search.length > 0 ? search : items}
+          data={search ? filteredProducts : productsArray}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <ProductItem item={item} />}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
         />
       </CardShadow>
     </View>
@@ -47,11 +67,14 @@ export default ItemListCategory;
 const styles = StyleSheet.create({
   container: { flex: 1 },
   listContainer: {
-    flex: 1,
-    padding: 10,
-    width: "90%",
     backgroundColor: "white",
+    padding: 10,
+    flex: 1,
+    width: "90%",
     alignSelf: "center",
     borderRadius: 10,
+  },
+  row: {
+    justifyContent: "space-between",
   },
 });

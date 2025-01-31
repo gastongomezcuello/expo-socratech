@@ -9,11 +9,13 @@ import CartStack from "./CartStack";
 import ShopStack from "./ShopStack";
 import { colors } from "../Global/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   const insets = useSafeAreaInsets();
+  const itemsQty = useSelector((state) => state.cart.value.items.length);
 
   return (
     <NavigationContainer>
@@ -78,7 +80,7 @@ const TabNavigator = () => {
                 </View>
               );
             },
-            tabBarBadge: 3,
+            tabBarBadge: itemsQty > 0 ? itemsQty : null,
           }}
         />
         <Tab.Screen

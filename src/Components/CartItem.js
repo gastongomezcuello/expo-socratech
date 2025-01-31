@@ -2,8 +2,14 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { colors } from "../Global/colors";
 import CardShadow from "./wrappers/CardShadow";
+import { useDispatch } from "react-redux";
+import { removeItem } from "../features/cart/cartSlice";
 
 const CartItem = ({ cartItem }) => {
+  const dispatch = useDispatch();
+  const onRemoveCart = () => {
+    dispatch(removeItem({ id: cartItem.id }));
+  };
   return (
     <Pressable
       onPress={() => {
@@ -21,7 +27,7 @@ const CartItem = ({ cartItem }) => {
             Subtotal: ${(cartItem.quantity * cartItem.price).toFixed(2)}
           </Text>
         </View>
-        <Pressable onPress={() => console.log("Delete item")}>
+        <Pressable onPress={() => onRemoveCart(cartItem.id)}>
           <Entypo name="trash" size={24} color="black" />
         </Pressable>
       </CardShadow>

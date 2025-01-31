@@ -8,6 +8,7 @@ export const colors = {
 
   secondary: "#4B85DB",
   darkSecondary: "#2963A9",
+  extraLightSecondary: "#96BEFF",
 
   details: "#4D59DB",
 };

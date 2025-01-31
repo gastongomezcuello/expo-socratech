@@ -1,12 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import allCategories from "../../data/categories";
-import { getAllItems } from "../../firebase/db";
-
-let allProducts = [];
-
-getAllItems().then((items) => {
-  allProducts = items;
-});
+import allProducts from "../../data/products";
 
 export const shopSlice = createSlice({
   name: "shop",
