@@ -1,6 +1,5 @@
 import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import CardShadow from "../Components/wrappers/CardShadow";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors } from "../Global/colors";
 import { useDispatch } from "react-redux";
@@ -9,7 +8,7 @@ import { addItem } from "../features/cart/cartSlice";
 const ItemDetail = ({ route }) => {
   const dispatch = useDispatch();
   const { item: product } = route.params;
-  const insets = useSafeAreaInsets();
+
   const onAddCart = () => {
     dispatch(addItem({ ...product, quantity: 1 }));
   };
@@ -18,9 +17,7 @@ const ItemDetail = ({ route }) => {
     <View style={styles.main}>
       <View style={styles.container}>
         {product ? (
-          <CardShadow
-            style={[styles.productContainer, , { marginBottom: insets.bottom }]}
-          >
+          <CardShadow style={styles.productContainer}>
             <Image
               source={{ uri: product.image }}
               style={styles.image}
@@ -59,7 +56,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "90%",
     alignSelf: "center",
-    marginTop: 10,
+    marginVertical: 10,
   },
 
   image: {

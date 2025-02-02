@@ -1,31 +1,50 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import InputForm from "../Components/InputForm";
-import SubmitButton from "../Components/SubmitButton";
-import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import { useLoginMutation } from "../services/authService";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/auth/authSlice";
+import FormContainer from "../Components/FormContainer";
 
 const Login = () => {
-  const navigation = useNavigation();
-  const onSubmit = () => {};
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMail, setErrorMail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+
+  const [triggerLogin] = useLoginMutation();
+
+  const dispatch = useDispatch();
+
+  const onSubmit = async () => {
+    try {
+      const response = await triggerLogin({
+        email,
+        password,
+      });
+      if (response.data) {
+        dispatch(
+          setUser({
+            data: {
+              email: response.data.email,
+              idToken: response.data.idToken,
+              localId: response.data.localId,
+            },
+          })
+        );
+      } else {
+        console.error("Error: Respuesta inesperada de la API", response);
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+    }
+  };
   return (
-    <View>
-      <View>
-        <InputForm label={"email"} onChange={() => {}} error={""} />
-        <InputForm
-          label={"password"}
-          onChange={() => {}}
-          error={""}
-          isSecure={true}
-        />
-        <SubmitButton title="Send" onPress={onSubmit} />
-        <Text>No tienes una cuenta?</Text>
-        <Pressable onPress={() => navigation.navigate("Signup")}>
-          <Text>Registrate</Text>
-        </Pressable>
-      </View>
-    </View>
+    <FormContainer
+      onSubmit={onSubmit}
+      signup={false}
+      setEmail={setEmail}
+      setPassword={setPassword}
+    />
   );
 };
 
 export default Login;
-
-const styles = StyleSheet.create({});

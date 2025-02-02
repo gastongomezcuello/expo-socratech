@@ -6,6 +6,7 @@ import { Fontisto } from "@expo/vector-icons";
 import OrdersStack from "./OrdersStack";
 import CartStack from "./CartStack";
 import ShopStack from "./ShopStack";
+import ProfileStack from "./ProfileStack";
 import { colors } from "../Global/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
@@ -88,6 +89,23 @@ const TabNavigator = () => {
               <View>
                 <Fontisto
                   name="shopping-pos-machine"
+                  size={32}
+                  color={focused ? colors.darkSecondary : colors.details}
+                />
+              </View>
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Perfil"
+        component={ProfileStack}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <MaterialComunityIcons
+                  name="account"
                   size={32}
                   color={focused ? colors.darkSecondary : colors.details}
                 />

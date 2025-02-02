@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar, Platform } from "react-native";
 import { useFonts } from "expo-font";
 import { fonts } from "./src/Global/fonts";
 import { colors } from "./src/Global/colors";
@@ -15,11 +15,18 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <MainNavigator />
-      </Provider>
-    </SafeAreaProvider>
+    <>
+      <StatusBar
+        backgroundColor="transparent"
+        barStyle="dark-content"
+        translucent={Platform.OS === "android"}
+      />
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <MainNavigator />
+        </Provider>
+      </SafeAreaProvider>
+    </>
   );
 }
 

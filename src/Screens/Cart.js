@@ -6,12 +6,13 @@ import { useSelector } from "react-redux";
 import { usePostOrderMutation } from "../services/ordersService";
 
 const Cart = () => {
+  const user = useSelector((state) => state.auth.value.token);
   const cartItems = useSelector((state) => state.cart.value.items);
   const total = useSelector((state) => state.cart.value.total);
   const [triggerPost, result] = usePostOrderMutation();
 
   const confirmCart = () => {
-    triggerPost({ total, cartItems, user: "loggedUser" });
+    triggerPost({ total, cartItems, user: user });
   };
 
   return (

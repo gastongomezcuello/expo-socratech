@@ -10,7 +10,7 @@ const CartStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         options={() => ({
-          header: () => <Header title="Cart" />,
+          header: () => <Header title="Cart" isLogged={true} />,
         })}
         name="Cart"
         component={Cart}

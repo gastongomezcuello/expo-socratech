@@ -10,7 +10,7 @@ const OrdersStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         options={() => ({
-          header: () => <Header title="Orders" />,
+          header: () => <Header title="Orders" isLogged={true} />,
         })}
         name="Orders"
         component={Orders}

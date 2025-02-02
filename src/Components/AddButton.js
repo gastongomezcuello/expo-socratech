@@ -1,12 +1,12 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { colors } from "../Global/colors";
 
-const SubmitButton = ({ onSubmit, title }) => {
+const AddButton = ({ onPress, title }) => {
   return (
     <Pressable
       style={styles.button}
       onPress={() => {
-        onSubmit();
+        onPress();
       }}
     >
       <Text style={styles.text}>{title}</Text>
@@ -14,11 +14,11 @@ const SubmitButton = ({ onSubmit, title }) => {
   );
 };
 
-export default SubmitButton;
+export default AddButton;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.details,
+    backgroundColor: colors.secondary,
     padding: 10,
     margin: 10,
     borderRadius: 10,

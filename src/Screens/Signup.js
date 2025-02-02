@@ -1,37 +1,86 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import InputForm from "../Components/InputForm";
-import SubmitButton from "../Components/SubmitButton";
-import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import { useSignupMutation } from "../services/authService";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/auth/authSlice";
+import FormContainer from "../Components/FormContainer";
+import { signupSchema } from "../validations/signupSchema";
 
 const Signup = () => {
-  const navigation = useNavigation();
-  const onSubmit = () => {};
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMail, setErrorMail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
+
+  const [triggerSignup] = useSignupMutation();
+
+  const dispatch = useDispatch();
+
+  const onSubmit = async () => {
+    try {
+      const validation = signupSchema.validateSync(
+        {
+          email,
+          password,
+          confirmPassword,
+        },
+        { abortEarly: false }
+      );
+
+      const response = await triggerSignup({
+        email,
+        password,
+      });
+      if (response.data) {
+        dispatch(
+          setUser({
+            data: {
+              email: response.data.email,
+              idToken: response.data.idToken,
+              localId: response.data.localId,
+            },
+          })
+        );
+      } else {
+        console.error("Error: Respuesta inesperada de la API", response);
+      }
+    } catch (err) {
+      setErrorMail("");
+      setErrorPassword("");
+      setErrorConfirmPassword("");
+
+      if (err.inner) {
+        err.inner.forEach((error) => {
+          switch (error.path) {
+            case "email":
+              setErrorMail(error.message);
+              break;
+            case "password":
+              setErrorPassword(error.message);
+              break;
+            case "confirmPassword":
+              setErrorConfirmPassword(error.message);
+              break;
+            default:
+              break;
+          }
+        });
+      }
+    }
+  };
   return (
-    <View>
-      <View>
-        <InputForm label={"email"} onChange={() => {}} error={""} />
-        <InputForm
-          label={"password"}
-          onChange={() => {}}
-          error={""}
-          isSecure={true}
-        />
-        <InputForm
-          label={"confirm password"}
-          onChange={() => {}}
-          error={""}
-          isSecure={true}
-        />
-        <SubmitButton title="Send" onPress={onSubmit} />
-        <Text>Ya tienes una cuenta?</Text>
-        <Pressable onPress={() => navigation.navigate("Login")}>
-          <Text>Inicia sesión</Text>
-        </Pressable>
-      </View>
-    </View>
+    <FormContainer
+      onSubmit={onSubmit}
+      signup={true}
+      setEmail={setEmail}
+      setPassword={setPassword}
+      setConfirmPassword={setConfirmPassword}
+      errorMail={errorMail}
+      errorPassword={errorPassword}
+      errorConfirmPassword={errorConfirmPassword}
+    />
   );
 };
 
 export default Signup;
-
-const styles = StyleSheet.create({});

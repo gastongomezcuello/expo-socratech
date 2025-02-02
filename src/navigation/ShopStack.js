@@ -14,7 +14,7 @@ const ShopStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         options={() => ({
-          header: () => <Header title="Home" />,
+          header: () => <Header title="Home" isLogged={true} />,
         })}
         name="Categorías"
         component={Home}
@@ -26,6 +26,7 @@ const ShopStack = () => {
               navigation={navigation}
               title={route.params.category}
               canGoBack={!!back}
+              isLogged={true}
             />
           ),
         })}
@@ -39,6 +40,7 @@ const ShopStack = () => {
               navigation={navigation}
               title={route.params.item.title}
               canGoBack={!!back}
+              isLogged={true}
             />
           ),
         })}

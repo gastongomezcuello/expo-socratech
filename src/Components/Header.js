@@ -1,10 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../features/auth/authSlice";
 
 import { colors } from "../Global/colors";
 
-const Header = ({ navigation, title, canGoBack }) => {
+const Header = ({ navigation, title, canGoBack, isLogged }) => {
   const insets = useSafeAreaInsets();
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -19,9 +22,16 @@ const Header = ({ navigation, title, canGoBack }) => {
           </Pressable>
         )}
         <Text style={styles.headerText}>{title}</Text>
-        <Pressable style={styles.rightButton} onPress={() => {}}>
-          <Text>Logout</Text>
-        </Pressable>
+        {isLogged ? (
+          <Pressable
+            style={styles.rightButton}
+            onPress={() => {
+              dispatch(clearUser());
+            }}
+          >
+            <Text>Logout</Text>
+          </Pressable>
+        ) : null}
       </View>
     </View>
   );

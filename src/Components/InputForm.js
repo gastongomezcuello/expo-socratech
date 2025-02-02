@@ -30,15 +30,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     width: "100%",
+    marginVertical: 20,
   },
   subtitle: {
     width: "90%",
     fontSize: 16,
     fontFamily: "Montserrat-Bold",
+    marginBottom: 5,
   },
   input: {
     width: "90%",
-    borderBottomWidth: 3,
+    borderBottomWidth: 2,
     borderBottomColor: colors.details,
     padding: 2,
     fontSize: 14,
