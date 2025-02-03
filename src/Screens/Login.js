@@ -8,8 +8,6 @@ import { insertSession } from "../db";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMail, setErrorMail] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
 
   const [triggerLogin] = useLoginMutation();
 
