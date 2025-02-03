@@ -4,13 +4,20 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState: {
     value: {
-      user: "userLogged",
       updatedAt: new Date().toLocaleString(),
       total: 0,
       items: [],
     },
   },
   reducers: {
+    setCart: (state, action) => {
+      state.value = {
+        items: action.payload.items,
+        total: action.payload.total,
+        updatedAt: action.payload.updatedAt,
+      };
+    },
+
     addItem: (state, action) => {
       debugger;
       const productRepeated = state.value.items.find(
@@ -64,9 +71,16 @@ export const cartSlice = createSlice({
         updatedAt: new Date().toLocaleString(),
       };
     },
+    clearCart: (state) => {
+      state.value = {
+        items: [],
+        total: 0,
+        updatedAt: new Date().toLocaleString(),
+      };
+    },
   },
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, removeItem, setCart, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

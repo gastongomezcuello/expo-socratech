@@ -1,21 +1,26 @@
 import { StyleSheet, Text, View, Pressable, FlatList } from "react-native";
 import OrderItem from "../Components/OrderItem";
-import orders from "../data/orders.json";
-import { colors } from "../Global/colors";
 
-const Cart = () => {
+import { colors } from "../Global/colors";
+import { useGetOrdersQuery } from "../services/ordersService";
+import { useSelector } from "react-redux";
+
+const Orders = () => {
+  const localId = useSelector((state) => state.auth.value.localId);
+  const { data: orders } = useGetOrdersQuery(localId);
+  console.log(orders);
   return (
     <View>
       <FlatList
         data={orders}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.updatedAt}
         renderItem={({ item }) => <OrderItem orderItem={item} />}
       />
     </View>
   );
 };
 
-export default Cart;
+export default Orders;
 
 const styles = StyleSheet.create({
   confirmContainer: {

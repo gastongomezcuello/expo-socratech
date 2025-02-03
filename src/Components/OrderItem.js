@@ -1,25 +1,16 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import { Entypo } from "@expo/vector-icons";
-import { colors } from "../Global/colors";
+import CardShadow from "./wrappers/CardShadow";
 
 const CartItem = ({ orderItem }) => {
-  const total = orderItem.items.reduce(
-    (acc, item) => acc + item.quantity * item.price,
-    0
-  );
   return (
-    <Pressable style={styles.cardContainer}>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>{orderItem.title}</Text>
-        <Text style={styles.text2}>Unidades: {orderItem.quantity}</Text>
+    <Pressable onPress={() => {}}>
+      <CardShadow style={styles.cardContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text2}>Fecha: {orderItem.updatedAt}</Text>
 
-        <Text style={styles.text3}>
-          Subtotal: ${(orderItem.quantity * orderItem.price).toFixed(2)}
-        </Text>
-      </View>
-      <Pressable>
-        <Entypo name="trash" size={24} color="black" />
-      </Pressable>
+          <Text style={styles.text3}>Total: ${orderItem.total.toFixed(2)}</Text>
+        </View>
+      </CardShadow>
     </Pressable>
   );
 };
@@ -33,9 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 10,
     margin: 10,
-    borderWidth: 1.5,
     borderRadius: 10,
-    borderColor: colors.darkSecondary,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

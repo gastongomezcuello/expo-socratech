@@ -4,15 +4,22 @@ import { colors } from "../Global/colors";
 import CardShadow from "../Components/wrappers/CardShadow";
 import { useSelector } from "react-redux";
 import { usePostOrderMutation } from "../services/ordersService";
+import { useDeleteCartMutation } from "../services/cartService";
 
 const Cart = () => {
-  const user = useSelector((state) => state.auth.value.token);
-  const cartItems = useSelector((state) => state.cart.value.items);
-  const total = useSelector((state) => state.cart.value.total);
-  const [triggerPost, result] = usePostOrderMutation();
+  const localId = useSelector((state) => state.auth.value.localId);
+  const cart = useSelector((state) => state.cart.value);
+  const cartItems = cart.items;
+  const total = cartItems.reduce((acc, item) => {
+    return acc + item.price * item.quantity;
+  }, 0);
+
+  const [triggerPost] = usePostOrderMutation();
+  const [triggerDeleteCart] = useDeleteCartMutation();
 
   const confirmCart = () => {
-    triggerPost({ total, cartItems, user: user });
+    triggerPost({ localId, order: cart });
+    triggerDeleteCart({ localId });
   };
 
   return (

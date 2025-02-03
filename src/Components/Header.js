@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { clearUser } from "../features/auth/authSlice";
 
 import { colors } from "../Global/colors";
+import { deleteSession } from "../db";
 
 const Header = ({ navigation, title, canGoBack, isLogged }) => {
   const insets = useSafeAreaInsets();
@@ -27,6 +28,7 @@ const Header = ({ navigation, title, canGoBack, isLogged }) => {
             style={styles.rightButton}
             onPress={() => {
               dispatch(clearUser());
+              deleteSession();
             }}
           >
             <Text>Logout</Text>

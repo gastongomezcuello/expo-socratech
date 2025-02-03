@@ -6,13 +6,22 @@ export const ordersApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: base_url }),
   endpoints: (builder) => ({
     postOrder: builder.mutation({
-      query: ({ ...order }) => ({
-        url: "orders.json",
+      query: ({ localId, order }) => ({
+        url: `orders/${localId}.json`,
         method: "POST",
         body: order,
       }),
     }),
+    getOrders: builder.query({
+      query: (localId) => `orders/${localId}.json`,
+      transformResponse: (response) => {
+        const orders = Object.values(response);
+        console.log("llega");
+        console.log(orders);
+        return orders;
+      },
+    }),
   }),
 });
 
-export const { usePostOrderMutation } = ordersApi;
+export const { usePostOrderMutation, useGetOrdersQuery } = ordersApi;

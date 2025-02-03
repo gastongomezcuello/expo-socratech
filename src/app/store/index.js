@@ -8,6 +8,7 @@ import { shopApi } from "../../services/shopService";
 import { ordersApi } from "../../services/ordersService";
 import { authApi } from "../../services/authService";
 import { profileApi } from "../../services/profileService";
+import { cartApi } from "../../services/cartService";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     [ordersApi.reducerPath]: ordersApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [cartApi.reducerPath]: cartApi.reducer,
 
     cart: cartReducer,
     auth: authReducer,
@@ -26,7 +28,8 @@ const store = configureStore({
       shopApi.middleware,
       ordersApi.middleware,
       authApi.middleware,
-      profileApi.middleware
+      profileApi.middleware,
+      cartApi.middleware
     ),
 });
 

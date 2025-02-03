@@ -1,8 +1,8 @@
 import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import CardShadow from "../Components/wrappers/CardShadow";
-
+import { useEffect } from "react";
 import { colors } from "../Global/colors";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
 
 const ItemDetail = ({ route }) => {

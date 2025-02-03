@@ -11,11 +11,7 @@ const CartItem = ({ cartItem }) => {
     dispatch(removeItem({ id: cartItem.id }));
   };
   return (
-    <Pressable
-      onPress={() => {
-        console.log("Item pressed");
-      }}
-    >
+    <Pressable onPress={() => {}}>
       <CardShadow style={styles.cardContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{cartItem.title}</Text>

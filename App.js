@@ -6,8 +6,11 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import MainNavigator from "./src/navigation";
 import { Provider } from "react-redux";
 import store from "./src/app/store";
+import { init } from "./src/db";
 
 export default function App() {
+  init();
+
   const [fontsLoaded] = useFonts(fonts);
 
   if (!fontsLoaded) {
