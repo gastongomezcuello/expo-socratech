@@ -16,8 +16,7 @@ export const ordersApi = createApi({
       query: (localId) => `orders/${localId}.json`,
       transformResponse: (response) => {
         const orders = Object.values(response);
-        console.log("llega");
-        console.log(orders);
+
         return orders;
       },
     }),

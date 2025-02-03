@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 const Orders = () => {
   const localId = useSelector((state) => state.auth.value.localId);
   const { data: orders } = useGetOrdersQuery(localId);
-  console.log(orders);
+
   return (
     <View>
       <FlatList

@@ -19,6 +19,7 @@ const Cart = () => {
 
   const confirmCart = () => {
     triggerPost({ localId, order: cart });
+
     triggerDeleteCart({ localId });
   };
 
