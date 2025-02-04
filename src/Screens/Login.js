@@ -4,21 +4,36 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../features/auth/authSlice";
 import FormContainer from "../Components/FormContainer";
 import { insertSession } from "../db";
+import { loginSchema } from "../validations/loginSchema";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMail, setErrorMail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorApi, setErrorApi] = useState("");
 
   const [triggerLogin] = useLoginMutation();
 
   const dispatch = useDispatch();
 
   const onSubmit = async () => {
+    console.log("Valores antes de validar:", { email, password });
+
     try {
+      const validation = loginSchema.validateSync(
+        {
+          email,
+          password,
+        },
+        { abortEarly: false }
+      );
+
       const response = await triggerLogin({
         email,
         password,
       });
+
       if (response.data) {
         dispatch(
           setUser({
@@ -35,10 +50,26 @@ const Login = () => {
           response.data.idToken
         );
       } else {
-        console.error("Error: Respuesta inesperada de la API", response);
+        setErrorApi("Credenciales no válidas");
       }
-    } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+    } catch (err) {
+      setErrorMail("");
+      setErrorPassword("");
+
+      if (err.inner) {
+        err.inner.forEach((error) => {
+          switch (error.path) {
+            case "email":
+              setErrorMail(error.message);
+              break;
+            case "password":
+              setErrorPassword(error.message);
+              break;
+            default:
+              break;
+          }
+        });
+      }
     }
   };
   return (
@@ -47,6 +78,9 @@ const Login = () => {
       signup={false}
       setEmail={setEmail}
       setPassword={setPassword}
+      errorMail={errorMail}
+      errorPassword={errorPassword}
+      errorApi={errorApi}
     />
   );
 };

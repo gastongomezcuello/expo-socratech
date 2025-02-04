@@ -13,6 +13,7 @@ const Signup = () => {
   const [errorMail, setErrorMail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
+  const [errorApi, setErrorApi] = useState("");
 
   const [triggerSignup] = useSignupMutation();
 
@@ -49,7 +50,9 @@ const Signup = () => {
           response.data.idToken
         );
       } else {
-        console.error("Error: Respuesta inesperada de la API", response);
+        setErrorApi(
+          "Error inesperado de la api de registro. Intente nuevamente mas tarde"
+        );
       }
     } catch (err) {
       setErrorMail("");
@@ -85,6 +88,7 @@ const Signup = () => {
       errorMail={errorMail}
       errorPassword={errorPassword}
       errorConfirmPassword={errorConfirmPassword}
+      errorApi={errorApi}
     />
   );
 };

@@ -13,6 +13,7 @@ const FormContainer = ({
   errorMail,
   errorPassword,
   errorConfirmPassword,
+  errorApi,
 }) => {
   const navigation = useNavigation();
   return (
@@ -33,6 +34,7 @@ const FormContainer = ({
             isSecure={true}
           />
         ) : null}
+        {errorApi ? <Text style={styles.error}>{errorApi}</Text> : null}
         <SubmitButton
           title={signup ? "Registrarme" : "Iniciar sesión"}
           onSubmit={onSubmit}
@@ -74,5 +76,11 @@ const styles = StyleSheet.create({
     color: "blue",
     textDecorationLine: "underline",
     padding: 10,
+  },
+  error: {
+    width: "90%",
+    fontSize: 12,
+    color: "red",
+    fontFamily: "Montserrat-Regular",
   },
 });
